@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réservation de Livraison - Ecologis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            width: 90%;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1, h2, p {
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background-color: #2d7a5f;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #245d49;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        .checkbox-group {
+            text-align: left;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+	<form id="googleSheetForm">
+    <div class="container" id="welcomePage">
+        <h1>La livraison qui vous ressemble</h1>
+        <p>Bienvenue sur la page de réservation de livraison</p>
+        <button class="btn" onclick="showPage('contactInfoPage')">Réserver une livraison</button>
+    </div>
+
+    <div class="container" id="contactInfoPage" style="display: none;">
+        <h2>Réserver une livraison - Coordonnées</h2>
+        <div class="form-group">
+            <label for="fullName">Nom complet</label>
+            <input type="text" id="fullName" required>
+        </div>
+        <div class="form-group">
+            <label for="whatsapp">Numéro WhatsApp</label>
+            <input type="text" id="whatsapp" required>
+        </div>
+        <div class="form-group">
+            <label for="pickupAddress">Adresse de retrait</label>
+            <input type="text" id="pickupAddress" required>
+        </div>
+        <div class="form-group">
+            <label for="deliveryAddress">Adresse de livraison</label>
+            <input type="text" id="deliveryAddress" required>
+        </div>
+        <div class="form-group">
+            <label for="recipientName">Nom du destinataire</label>
+            <input type="text" id="recipientName" required>
+        </div>
+        <div class="form-group">
+            <label for="recipientPhone">Téléphone du destinataire</label>
+            <input type="text" id="recipientPhone" required>
+        </div>
+        <button class="btn" onclick="showPage('deliveryDetailPage')">Suivant</button>
+    </div>
+
+    <div class="container" id="deliveryDetailPage" style="display: none;">
+        <h2>Détail de la livraison</h2>
+        <div class="form-group">
+            <label for="packageDescription">Description du colis</label>
+            <input type="text" id="packageDescription" required>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Quantité</label>
+            <input type="number" id="quantity" required>
+        </div>
+        <div class="form-group">
+            <label for="value">Valeur (en XOF)</label>
+            <input type="number" id="value" required>
+        </div>
+        <div class="form-group">
+            <label for="deliveryDate">Date de livraison</label>
+            <input type="date" id="deliveryDate" required>
+        </div>
+        <div class="form-group">
+            <label for="timeSlot">Tranches d'heures de livraison</label>
+            <select id="timeSlot" required>
+                <option value="Matin">Matin (8h-12h)</option>
+                <option value="Après-midi">Après-midi (12h-16h)</option>
+                <option value="Soir">Soir (16h-20h)</option>
+            </select>
+        </div>
+        <div class="checkbox-group">
+            <p>En cas d'absence du destinataire :</p>
+            <label><input type="checkbox" id="returnOption"> Retour au point de départ</label><br>
+            <label><input type="checkbox" id="doorOption"> Déposer devant la porte</label><br>
+            <label><input type="checkbox" id="neighborOption"> Déposer chez un voisin</label>
+        </div>
+        <div class="form-group">
+            <label for="comments">Commentaires ou consignes particulières</label>
+            <textarea id="comments" rows="3"></textarea>
+        </div>
+        <div class="checkbox-group">
+            <label><input type="checkbox" id="terms" required> J'accepte les termes et conditions</label><br>
+            <label><input type="checkbox" id="consent" required> Je consens à lancer la commande</label>
+        </div>
+       <!-- <button class="btn" onclick="validateReservation()">Valider ma réservation</button>-->
+	   <button type="submit" class="btn" >Envoyer</button>
+    </div>
+	</form>
+    <div class="container" id="confirmationPage" style="display: none;">
+        <h2>Commande Validée !</h2>
+        <p id="confirmationMessage"></p>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.container').forEach(page => page.style.display = 'none');
+            document.getElementById(pageId).style.display = 'block';
+        }
+
+        function generateOrderNumber() {
+            return 'EcL' + Math.floor(1000 + Math.random() * 9000);
+        }
+
+        function validateReservation() {
+            const orderNumber = generateOrderNumber();
+            
+            // Vous pouvez ajouter ici une requête vers un backend si besoin d'envoyer les données.
+			document.getElementById('confirmationMessage').innerHTML = "Votre commande a été validée avec le numéro : <strong>${orderNumber}</strong>.<br> Veuillez garder ce numéro pour le suivi de votre commande.";
+            showPage('confirmationPage');
+        }
+		document.getElementById('googleSheetForm').addEventListener('submit', async (e) => {
+			e.preventDefault();
+			alert("test");
+			const form = e.target;
+			const formData = new FormData(form);
+			const data = Object.fromEntries(formData.entries());
+			const scriptURL = 'https://script.google.com/macros/s/AKfycbz3fDKnX_8z6ZWWcZT08Nd1dOU8CP75AROkQLqwrWtf8QreG_JCZw_Gc-KyyGWohnO9/exec'; // Collez l'URL de votre Apps Script ici
+
+			try {
+			const response = await fetch(scriptURL, {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
+			'Content-Type': 'application/json',
+			},
+			});
+
+			const result = await response.json();
+			document.getElementById('responseMessage').textContent = result.message;
+
+			if (result.status === 'success') {
+			form.reset();
+			}
+			} catch (error) {
+			console.error('Erreur:', error);
+			document.getElementById('responseMessage').textContent =
+			'Une erreur est survenue. Veuillez réessayer.';
+			}
+			});
+
+		
+    </script>
+
+</body>
+</html>

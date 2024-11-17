@@ -75,7 +75,7 @@
     </style>
 </head>
 <body>
-	<form method="post" action="" name="googleSheetForm" >
+	<form method="post" action="https://script.google.com/macros/s/AKfycbzh7Vj0Gv8j9UHUtNb3O3ikzaE1yTOCloiEBzRy6CK3MD_TahDVUvzC6dw4lwtdvTv4/exec" name="googleSheetForm" >
     <div class="container" id="welcomePage">
         <h1>La livraison qui vous ressemble</h1>
         <p>Bienvenue sur la page de réservation de livraison</p>
@@ -177,7 +177,7 @@
 			document.getElementById('confirmationMessage').innerHTML = "Votre commande a été validée avec le numéro : <strong>${orderNumber}</strong>.<br> Veuillez garder ce numéro pour le suivi de votre commande.";
             showPage('confirmationPage');
         }
-		const scriptURL = 'https://script.google.com/macros/s/AKfycbzh7Vj0Gv8j9UHUtNb3O3ikzaE1yTOCloiEBzRy6CK3MD_TahDVUvzC6dw4lwtdvTv4/exec'
+		/*const scriptURL = 'https://script.google.com/macros/s/AKfycbzh7Vj0Gv8j9UHUtNb3O3ikzaE1yTOCloiEBzRy6CK3MD_TahDVUvzC6dw4lwtdvTv4/exec'
 
 
 const form = document.forms['googleSheetForm']
@@ -190,7 +190,7 @@ form.addEventListener('submit', e => {
   .then(response => alert("Thank you! your form is submitted successfully." ))
   .then(() => { window.location.reload(); })
   .catch(error => console.error('Error!', error.message))
-})
+})*/
 
 
 		

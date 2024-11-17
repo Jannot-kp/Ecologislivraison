@@ -86,27 +86,27 @@
         <h2>Réserver une livraison - Coordonnées</h2>
         <div class="form-group">
             <label for="fullName">Nom complet</label>
-            <input type="text" id="fullName" required>
+            <input type="text" id="fullName" name="fullName" required>
         </div>
         <div class="form-group">
             <label for="whatsapp">Numéro WhatsApp</label>
-            <input type="text" id="whatsapp" required>
+            <input type="text" id="whatsapp" name="whatsapp" required>
         </div>
         <div class="form-group">
             <label for="pickupAddress">Adresse de retrait</label>
-            <input type="text" id="pickupAddress" required>
+            <input type="text" id="pickupAddress" name="pickupAddress" required>
         </div>
         <div class="form-group">
             <label for="deliveryAddress">Adresse de livraison</label>
-            <input type="text" id="deliveryAddress" required>
+            <input type="text" id="deliveryAddress" name="deliveryAddress" required>
         </div>
         <div class="form-group">
             <label for="recipientName">Nom du destinataire</label>
-            <input type="text" id="recipientName" required>
+            <input type="text" id="recipientName" name="recipientName" required>
         </div>
         <div class="form-group">
             <label for="recipientPhone">Téléphone du destinataire</label>
-            <input type="text" id="recipientPhone" required>
+            <input type="text" id="recipientPhone" name="recipientPhone" required>
         </div>
         <button class="btn" onclick="showPage('deliveryDetailPage')">Suivant</button>
     </div>
@@ -115,23 +115,23 @@
         <h2>Détail de la livraison</h2>
         <div class="form-group">
             <label for="packageDescription">Description du colis</label>
-            <input type="text" id="packageDescription" required>
+            <input type="text" id="packageDescription" name="packageDescription" required>
         </div>
         <div class="form-group">
             <label for="quantity">Quantité</label>
-            <input type="number" id="quantity" required>
+            <input type="number" id="quantity" name="quantity" required>
         </div>
         <div class="form-group">
             <label for="value">Valeur (en XOF)</label>
-            <input type="number" id="value" required>
+            <input type="number" id="montant" name="montant" required>
         </div>
         <div class="form-group">
             <label for="deliveryDate">Date de livraison</label>
-            <input type="date" id="deliveryDate" required>
+            <input type="date" id="deliveryDate" name="deliveryDate" required>
         </div>
         <div class="form-group">
             <label for="timeSlot">Tranches d'heures de livraison</label>
-            <select id="timeSlot" required>
+            <select id="timeSlot" id="timeSlot" name="timeSlot" required>
                 <option value="Matin">Matin (8h-12h)</option>
                 <option value="Après-midi">Après-midi (12h-16h)</option>
                 <option value="Soir">Soir (16h-20h)</option>
@@ -139,17 +139,17 @@
         </div>
         <div class="checkbox-group">
             <p>En cas d'absence du destinataire :</p>
-            <label><input type="checkbox" id="returnOption"> Retour au point de départ</label><br>
-            <label><input type="checkbox" id="doorOption"> Déposer devant la porte</label><br>
-            <label><input type="checkbox" id="neighborOption"> Déposer chez un voisin</label>
+            <label><input type="checkbox" id="returnOption" name="returnOption"/> Retour au point de départ</label><br>
+            <label><input type="checkbox" id="doorOption" name="doorOption"/> Déposer devant la porte</label><br>
+            <label><input type="checkbox" id="neighborOption" name="neighborOption"/> Déposer chez un voisin</label>
         </div>
         <div class="form-group">
             <label for="comments">Commentaires ou consignes particulières</label>
-            <textarea id="comments" rows="3"></textarea>
+            <textarea id="comments" name="comments" rows="3"></textarea>
         </div>
         <div class="checkbox-group">
-            <label><input type="checkbox" id="terms" required> J'accepte les termes et conditions</label><br>
-            <label><input type="checkbox" id="consent" required> Je consens à lancer la commande</label>
+            <label><input type="checkbox" id="terms" name="terms" required/> J'accepte les termes et conditions</label><br>
+            <label><input type="checkbox" id="consent" name="consent" required/> Je consens à lancer la commande</label>
         </div>
        <!-- <button class="btn" onclick="validateReservation()">Valider ma réservation</button>-->
 	   <button type="submit" class="btn" >Envoyer</button>

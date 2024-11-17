@@ -177,35 +177,20 @@
 			document.getElementById('confirmationMessage').innerHTML = "Votre commande a été validée avec le numéro : <strong>${orderNumber}</strong>.<br> Veuillez garder ce numéro pour le suivi de votre commande.";
             showPage('confirmationPage');
         }
-		document.getElementById('googleSheetForm').addEventListener('submit', async (e) => {
-			e.preventDefault();
-			alert("test");
-			const form = e.target;
-			const formData = new FormData(form);
-			const data = Object.fromEntries(formData.entries());
-			const scriptURL = 'https://script.google.com/macros/s/AKfycbz3fDKnX_8z6ZWWcZT08Nd1dOU8CP75AROkQLqwrWtf8QreG_JCZw_Gc-KyyGWohnO9/exec'; // Collez l'URL de votre Apps Script ici
+		const scriptURL = 'https://script.google.com/macros/s/AKfycbzh7Vj0Gv8j9UHUtNb3O3ikzaE1yTOCloiEBzRy6CK3MD_TahDVUvzC6dw4lwtdvTv4/exec'
 
-			try {
-			const response = await fetch(scriptURL, {
-			method: 'POST',
-			body: JSON.stringify(data),
-			headers: {
-			'Content-Type': 'application/json',
-			},
-			});
 
-			const result = await response.json();
-			document.getElementById('responseMessage').textContent = result.message;
+const form = document.forms['googleSheetForm']
 
-			if (result.status === 'success') {
-			form.reset();
-			}
-			} catch (error) {
-			console.error('Erreur:', error);
-			document.getElementById('responseMessage').textContent =
-			'Une erreur est survenue. Veuillez réessayer.';
-			}
-			});
+
+form.addEventListener('submit', e => {
+  e.preventDefault()
+  fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+  .then(response => alert("Thank you! your form is submitted successfully." ))
+  .then(() => { window.location.reload(); })
+  .catch(error => console.error('Error!', error.message))
+})
+
 
 		
     </script>
